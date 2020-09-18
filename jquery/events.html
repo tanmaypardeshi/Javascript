@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Events</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+    <style>
+        body {
+            font-size: 17px;
+            font-family: 'Courier New', Courier, monospace;
+            background: #f4f4f4;
+            line-height: 1.5em;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            border-bottom: 4px solid black;
+            padding: 20px;
+        }
+        #container {
+            width: 90%;
+            margin: auto;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>jQuery Events</h1>
+    </header>
+    <div id="container">
+        <h3>
+            Mouse Events
+        </h3>
+        <button id="btn1">Hide</button>
+        <button id="btn2">Show</button>
+        <button id="btn3">Toggle</button>
+        <button id="btn4">Double Click</button>
+        <button id="btn5">Hover</button>
+        <button id="btn6">Enter and leave</button>
+        <button id="btn7">Move</button>
+        <button id="btn8">Down</button>
+        <button id="btn9">Up</button>
+        <button id="btn10" class="btnclass">Console log</button>
+        <p class="para1">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+            Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
+            natoque penatibus et magnis dis parturient montes, nascetur 
+            ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+            eu, pretium quis, sem. 
+        </p>
+        <h3 id="add"></h3>
+        <hr>
+        <form>
+            <label>First Name:</label><br>
+            <input type="text" id="fname" name="First Name"><br>
+            <label>Last Name:</label><br>
+            <input type="text" id="lname" name="Last Name"><br>
+            
+            <label>Email:</label><br>
+            <input type="text" id="email" name="Email"><br>
+            <label>Gender</label><br>
+            <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#btn1').click(function() {
+            window.alert('Button 1 Clicked');
+            });
+
+            $('#btn2').on('click', function() {
+                window.alert('Button 2 Clicked');
+            });
+
+            $('#btn1').on('click', function() {
+                $('.para1').hide();
+            });
+
+            $('#btn2').on('click', function() {
+                $('.para1').show();
+            })
+
+            $('#btn3').on('click', function() {
+                $('.para1').toggle();
+            });
+
+            $('#btn4').dblclick(function() {
+                $('.para1').toggle();
+            });
+
+            $('#btn5').hover(function() {
+                $('.para1').toggle();
+            })
+
+            $('#btn6').on('mouseenter', function() {
+                $('.para1').toggle();
+            });
+
+            $('#btn6').on('mouseleave', function() {
+                $('.para1').toggle();
+            });
+
+            $('#btn7').on('mousemove', function(event) {
+                $('.para1').toggle();
+                console.log(`Coordinates of btn 7 are ${event.clientX}, ${event.clientY}`);
+            });
+
+            $('#btn8').on('mousedown', function() {
+                $('.para1').toggle();
+            });
+
+            $('#btn9').on('mouseup', function() {
+                $('.para1').toggle();
+            });
+            
+            $('#btn10').click(function(event) {
+                console.log(event);
+                console.log(event.currentTarget.id);
+                console.log(event.currentTarget.className);
+                console.log(event.currentTarget.innerHTML);
+                console.log(event.currentTarget.outerHTML);
+            });
+            
+            $(document).on('mousemove', function(event) {
+                $('#add').html(`Coordinate Y: ${event.clientY}, X: ${event.clientX}`);
+            })
+
+            $('input').focus(function() {
+                $(this).css('background', 'pink');
+            });
+
+            $('input').blur(function() {
+                $(this).css('background', '#ff4');
+            });
+
+            $('input#fname').keyup(function(event) {
+                $('#add').html('On key up:- ' + event.target.value);
+            });
+            $('input#lname').keydown(function(event) {
+                $('#add').html('On key down:- ' + event.target.value);
+            });
+            $('input#email').keypress(function(event) {
+                $('#add').html('On key press:- ' + event.target.value);
+            });
+            
+            $('select#gender').change(function(event) {
+                alert('Changed to:- ' + event.target.value);
+            })
+
+            $('form').submit(function(event) {
+                event.preventDefault();
+                var fname = $('input#fname').val();
+                var lname = $('input#lname').val();
+                console.log(`Name is ${fname} ${lname}`);  
+            });
+        });
+    </script>
+</body>
+</html>
